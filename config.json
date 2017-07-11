@@ -1,0 +1,17 @@
+{
+  "name": "Doorlock at the garage",
+  "device_id": "GarageESP1",
+  "wifi": {
+    "ssid" : "mywifinetwork",
+    "password": "dasgehtdichnichtsan"
+  },
+  "mqtt": {
+    "host" : "192.168.1.2",
+    "port": 1883,
+    "base_topic": "garage/",
+    "auth": false
+  },
+  "ota": {
+    "enabled": true
+  }
+}
