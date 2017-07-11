@@ -1,0 +1,17 @@
+// homie.rules
+
+rule MqttMessageChanged_On
+when
+  Item mqttMessage changed to ON
+  then
+    postUpdate(homie_switch,ON)
+    // pushover("MQTT rule> set homie_switch to ON ")
+end
+
+rule MqttMessageChanged_Off
+when
+  Item mqttMessage changed to OFF
+  then
+    postUpdate(homie_switch,OFF)
+    // pushover("MQTT rule> set homie_switch to OFF ")
+end

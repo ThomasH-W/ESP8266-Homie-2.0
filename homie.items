@@ -1,0 +1,31 @@
+// homie.items
+
+/************************************************** Groups ********************************************/
+Group ghomieGarage	"Homie Garage"
+Group gHomie1Setup 	"Homie 1 Setup"
+  
+/************************************************** Items ********************************************/
+
+// no inbound message applied so we can set the state of the switch from outside via MQTT as defined in homie.rules
+Switch homie_switch "MQTT Switch 5 (outbound only)" (gHomie1Setup)	{
+	mqtt=">[mosquitto:garage/Door_Garage_ESP1/switchDoor/on/set:state:ON:true],
+	      >[mosquitto:garage/Door_Garage_ESP1/switchDoor/on/set:state:OFF:false]"
+}
+// listen to status conveyed via MQTT
+String mqttMessage 		"MQTT switch status: [%s]" 	(gHomie1Setup)	{ mqtt="<[mosquitto:garage/Door_Garage_ESP1/switchDoor/on:state:MAP(trueonfalseoff.map)" }
+
+
+// homie2_main.cpp: setup() Homie_setFirmware("garage-doorlock", "1.0.1");
+String homie_name 		"Name: [%s]"  		(gHomie1Setup)	{ mqtt="<[mosquitto:garage/Door_Garage_ESP1/$fw/name:state:REGEX((.*))]"  }
+String homie_fwversion 	"FW version: [%s]"  (gHomie1Setup)	{ mqtt="<[mosquitto:garage/Door_Garage_ESP1/$fw/version:state:REGEX((.*))]" }
+
+// homie/config.json
+String homie_fwname 	"FW name: [%s]"  	(gHomie1Setup)	{ mqtt="<[mosquitto:garage/Door_Garage_ESP1/$name:state:REGEX((.*))]" }
+
+Number homie_signal 	"Signal [%1.0f]%" 	(gHomie1Setup)	{ mqtt="<[mosquitto:garage/Door_Garage_ESP1/$stats/signal:state:REGEX((.*))]" }
+Number homie_uptime 	"uptime [%1.0f]s" 	(gHomie1Setup)	{ mqtt="<[mosquitto:garage/Door_Garage_ESP1/$stats/uptime:state:REGEX((.*))]" }
+
+String homie_online 	"online: [%s]"		(gHomie1Setup)	{ mqtt="<[mosquitto:garage/Door_Garage_ESP1/$online:state:default]" }
+
+String homie_tempS 		"Temperature string [%s]" 		<temperature> 	{ mqtt="<[mosquitto:garage/Door_Garage_ESP1/temperature/degrees:state:default]"}
+Number homie_temp 		"Temperature number [%.1f °C]" <temperature> 	{ mqtt="<[mosquitto:garage/Door_Garage_ESP1/temperature/degrees:state:REGEX((.*))]"}

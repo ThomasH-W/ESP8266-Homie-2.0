@@ -1,0 +1,19 @@
+// myHome.sitemap
+ 
+sitemap myHome label="Welcome to my Home" { 
+
+Frame label="Homie Garage" { 
+	Switch 	item=homie_switch
+	// Text 	item=mqttMessage
+	// Text  	item=homie_tempS
+	Text  	item=homie_temp  
+	Text  	item=homie_uptime
+	
+	Group item=gHomie1Setup label="Device Info" icon="settings"
+	
+	
+	
+} // end of Frame
+
+
+} // end of sitemap
